@@ -4,6 +4,8 @@ import {UserLdap} from "../models/user-ldap";
 import {MatPaginator} from "@angular/material/paginator";
 import {LDAP_USERS} from "../models/ldap-mock-data";
 import {MatSlideToggleChange} from "@angular/material/slide-toggle";
+import {UsersService} from "../service/users.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-ldap-list',
@@ -17,7 +19,7 @@ export class LdapListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | null;
 
-  constructor() {
+  constructor(private usersServices : UsersService, private router : Router) {
     this.paginator = null;
   }
 
@@ -41,13 +43,27 @@ export class LdapListComponent implements OnInit, AfterViewInit {
 
 
   private getUsers():void {
-    if (this.unactiveSelected) {
-      this.dataSource.data = LDAP_USERS.filter((user: UserLdap) => !user.active);
+    this.usersServices.getUsers().subscribe(
+      users => {
+        if (this.unactiveSelected) {
+          this.dataSource.data = LDAP_USERS.filter((user: UserLdap) =>
+            !user.active);
+        }
+        else {
+          this.dataSource.data = LDAP_USERS;
+        }
       }
-   else {
-  this.dataSource.data = LDAP_USERS;
+    )
 }
-}
+
+  edit(login: string){
+    this.router.navigate(['user/', login]).then((e : boolean) =>{
+      if(!e){
+        console.error('Navigation has failed !')
+      }
+    })
+  }
+
 unactiveChanged($event: MatSlideToggleChange): void{
   this.unactiveSelected = $event.checked;
 this.getUsers();
