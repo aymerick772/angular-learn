@@ -42,6 +42,10 @@ export class LdapListComponent implements OnInit, AfterViewInit {
   }
 
 
+
+
+
+
   private getUsers():void {
     this.usersServices.getUsers().subscribe(
       users => {

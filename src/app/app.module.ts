@@ -14,6 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { LdapDetailsComponent } from './ldap-details/ldap-details.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { LdpaEditComponent } from './ldpa-edit/ldpa-edit.component';
+import { LdpaAddComponent } from './ldpa-add/ldpa-add.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     LdapListComponent,
     PageNotFoundComponent,
     NavbarComponent,
-    LdapDetailsComponent
+    LdapDetailsComponent,
+    LdpaEditComponent,
+    LdpaAddComponent
   ],
   imports: [
     BrowserModule,

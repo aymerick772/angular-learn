@@ -10,7 +10,9 @@ import {FormBuilder, FormGroup} from "@angular/forms";
   templateUrl: './ldap-details.component.html',
   styleUrls: ['./ldap-details.component.css']
 })
-export class LdapDetailsComponent implements OnInit{
+export abstract class LdapDetailsComponent implements OnInit{
+
+  passwordPlaceHolder : string;
   user: UserLdap | undefined;
   processLoadRunning = false;
   processValidateRunning = false;
@@ -25,32 +27,39 @@ export class LdapDetailsComponent implements OnInit{
     }),
     mail:{value:'', disabled: true},
   })
-  constructor(
-    private route :ActivatedRoute,
-    private usersServices : UsersService,
-    private fb: FormBuilder,
-    private router : Router
-  ) {}
+   constructor(
+    public addForm : boolean,
+    public route :ActivatedRoute,
+    public fb: FormBuilder,
+    public router : Router
+
+  ) {
+    this.passwordPlaceHolder = "Mot de passe" + (this.addForm ? '' : '(vide si inchangé)')
+  }
+
+  onInit():void{
+
+  }
 
   ngOnInit(): void {
-    this.getUser();
+    // this.getUser();
   }
 
-  private getUser(){
-    const login = this.route.snapshot.paramMap.get('id');
-    console.log("getUser = " + login)
-
-    if(login === null){
-      console.log('trouve pas luser avec lurl bro');
-      return
-    }
-    this.usersServices.getUser(login).subscribe(
-      user =>{
-        this.user;
-        console.log('ldapDetails getUSer = ' + user.mail)
-      }
-    )
-  }
+  // private getUser(){
+  //   const login = this.route.snapshot.paramMap.get('id');
+  //   console.log("getUser = " + login)
+  //
+  //   if(login === null){
+  //     console.log('trouve pas luser avec lurl bro');
+  //     return
+  //   }
+  //   this.usersServices.getUser(login).subscribe(
+  //     user =>{
+  //       this.user;
+  //       console.log('ldapDetails getUSer = ' + user.mail)
+  //     }
+  //   )
+  // }
   goToLdap(){
     this.router.navigate(['/users/list']).then((e: boolean) =>{
       if(!e){
@@ -60,7 +69,13 @@ export class LdapDetailsComponent implements OnInit{
     });
   }
 
-  onSubmitForm(){}
+  onSubmitForm(){
+    this.validateForm();
+  }
+
+  abstract validateForm() : void
+
+
   updateLogin(){
     const control = this.userForm.get('login');
     if (control ===  null){
@@ -80,10 +95,11 @@ export class LdapDetailsComponent implements OnInit{
     control?.setValue(this.formGetValue('login').toLowerCase() + '@epsi.lan');
   }
   isFormValid(){
-  return false;
+  return this.userForm.valid
+    && (!this.addForm || this.formGetValue('passwordGroup.password') != '');
   }
 
-  private formGetValue(name: string) :any{
+  private formGetValue(name: string) :string{
     const control = this.userForm.get(name);
     if(control === null){
       console.error("L'object " + name + "' du formulaire n'existe pas");
@@ -91,6 +107,46 @@ export class LdapDetailsComponent implements OnInit{
     }
     return control.value
   }
+
+  private formSetValue(name: string, value : string | number): void{
+    const control = this.userForm.get(name);
+    if(control === null){
+      console.log("l'object '" + name + "' du formulaire n'existe pas");
+      return;
+    }
+    control.setValue(value)
+  }
+
+  protected copyUserToFormControl() : void{
+    if(this.user === undefined){
+      return;
+    }
+    this.formSetValue('login', this.user.login);
+    this.formSetValue('nom', this.user.nom);
+    this.formSetValue('prenom', this.user.prenom);
+    this.formSetValue('mail', this.user.mail);
+  //   ne pas oublier le reste !!!
+  }
+
+  protected getUserFromFormControl(): UserLdap{
+
+    return{
+      login: this.formGetValue('login'),
+      nom: this.formGetValue('nom'),
+      prenom: this.formGetValue('prenom'),
+      mail: this.formGetValue('mail'),
+      employeNiveau : 1,
+      employeNumero : 1,
+      publisherId : 1,
+      active : true,
+      motDePasse : '',
+      role : 'ROLE_USER',
+      dateEmbauche: "2020-04-04",
+      nomComplet: this.formGetValue('nom') + " " + this.formGetValue('prenom'),
+    }
+  }
+
+
 
 }
 
