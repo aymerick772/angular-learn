@@ -31,7 +31,6 @@ export class LdpaAddComponent extends LdapDetailsComponent implements OnInit{
 
   validateForm(): void {
     console.log("LdapEditComponent - validateForm")
-
     this.processValidateRunning = true;
     this.usersService.addUser(this.getUserFromFormControl()).subscribe({
       next: (value) =>{
@@ -47,5 +46,4 @@ export class LdpaAddComponent extends LdapDetailsComponent implements OnInit{
         }
       });
   }
-
 }

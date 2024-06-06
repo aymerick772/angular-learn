@@ -1,4 +1,4 @@
-import {AbstractControl, FormGroupDirective, NgForm, ValidationErrors, ValidatorFn} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroupDirective, NgForm, ValidationErrors, ValidatorFn} from "@angular/forms";
 import {ErrorStateMatcher} from "@angular/material/core";
 
 export const passwordsMatchingValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -10,7 +10,7 @@ export const passwordsMatchingValidator: ValidatorFn = (control: AbstractControl
 }
 
 export class ConfirmValidParentMatcher implements ErrorStateMatcher {
-   isErrorState(control: AbstractControl | null, form: FormGroupDirective | NgForm | null): boolean {
+   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
 
     const isSubmitted = form && form.submitted;
     return !!(control && control.parent
