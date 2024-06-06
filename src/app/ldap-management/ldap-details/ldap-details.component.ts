@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
-import {UserLdap} from "../models/user-ldap";
+import {UserLdap} from "../../models/user-ldap";
 import {MatTableDataSource} from "@angular/material/table";
-import {UsersService} from "../service/users.service";
+import {UsersService} from "../../service/users.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ConfirmValidParentMatcher, passwordsMatchingValidator} from "./passwords-validator.directive";
 // @Component({

@@ -1,30 +1,32 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.css']
 })
-export class AlertComponent  implements OnInit{
-  @Input() type: string;
-  cssClass : string[] = ['alert', 'alert-dimissible', 'fade'];
+export class AlertComponent implements OnInit {
+  @Input() type: string = 'info';
+  cssClass: string[] = ['alert', 'alert-dismissible', 'fade'];
 
-
-  constructor() {
-    this.type = 'info';
-  }
   ngOnInit() {
-    let alert = "alert info";
-    switch (this.type){
-      case 'success' : 'alert-success'; break;
-      case 'danger' : 'alert-danger'; break;
-      case 'warning' : 'alert-warning'; break;
+    switch (this.type) {
+      case 'success':
+        this.cssClass.push('alert-success');
+        break;
+      case 'danger':
+        this.cssClass.push('alert-danger');
+        break;
+      case 'warning':
+        this.cssClass.push('alert-warning');
+        break;
+      default:
+        this.cssClass.push('alert-info');
+        break;
     }
-    this.cssClass.push(alert)
   }
 
-
-  removeAlert(){
+  removeAlert() {
     this.cssClass = ['alert-hide'];
   }
 }

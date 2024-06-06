@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {UserLdap} from "../models/user-ldap";
+import {UserLdap} from "../../models/user-ldap";
 import {MatPaginator} from "@angular/material/paginator";
-import {LDAP_USERS} from "../models/ldap-mock-data";
+import {LDAP_USERS} from "../../models/ldap-mock-data";
 import {MatSlideToggleChange} from "@angular/material/slide-toggle";
-import {UsersService} from "../service/users.service";
+import {UsersService} from "../../service/users.service";
 import {Router} from "@angular/router";
 import {Observable, of, throwError} from "rxjs";
 

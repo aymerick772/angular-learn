@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {UsersService} from "../service/users.service";
+import {UsersService} from "../../service/users.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder} from "@angular/forms";
 import {LdapDetailsComponent} from "../ldap-details/ldap-details.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {UserLdap} from "../models/user-ldap";
+import {UserLdap} from "../../models/user-ldap";
 
 @Component({
   selector: 'app-ldpa-edit',
