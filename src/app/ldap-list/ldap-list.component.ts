@@ -6,6 +6,7 @@ import {LDAP_USERS} from "../models/ldap-mock-data";
 import {MatSlideToggleChange} from "@angular/material/slide-toggle";
 import {UsersService} from "../service/users.service";
 import {Router} from "@angular/router";
+import {Observable, of, throwError} from "rxjs";
 
 @Component({
   selector: 'app-ldap-list',
@@ -27,6 +28,7 @@ export class LdapListComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.filterPredicate = (data: UserLdap, filter: string) => this.filterPredicate (data, filter);
     this.getUsers();
+
   }
   filterPredicate (data : UserLdap, filter : string): boolean {
     return !filter || data.nomComplet.toLowerCase().startsWith(filter);
@@ -40,6 +42,15 @@ export class LdapListComponent implements OnInit, AfterViewInit {
     console.log("Mat Paginator:", this.paginator);
     this.getUsers()
   }
+  addUser(){
+    this.router.navigate(['/user/add']).then( (e) =>{
+      if(! e) {
+        console.log('Navigation has failed!')
+      }
+    })
+  }
+
+
 
 
 
@@ -47,6 +58,7 @@ export class LdapListComponent implements OnInit, AfterViewInit {
 
 
   private getUsers():void {
+
     this.usersServices.getUsers().subscribe(
       users => {
         if (this.unactiveSelected) {

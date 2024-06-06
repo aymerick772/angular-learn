@@ -4,14 +4,18 @@ import {Location} from "@angular/common";
 import {UserLdap} from "../models/user-ldap";
 import {MatTableDataSource} from "@angular/material/table";
 import {UsersService} from "../service/users.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
-@Component({
-  selector: 'app-ldap-details',
-  templateUrl: './ldap-details.component.html',
-  styleUrls: ['./ldap-details.component.css']
-})
-export abstract class LdapDetailsComponent implements OnInit{
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ConfirmValidParentMatcher, passwordsMatchingValidator} from "./passwords-validator.directive";
+// @Component({
+//   selector: 'app-ldap-details',
+//   templateUrl: './ldap-details.component.html',
+//   styleUrls: ['./ldap-details.component.css']
+// })
+export abstract class LdapDetailsComponent {
 
+  confirmValidParentMatcher = new ConfirmValidParentMatcher();
+  errorMessage = '';
+  type = ""
   passwordPlaceHolder : string;
   user: UserLdap | undefined;
   processLoadRunning = false;
@@ -24,26 +28,41 @@ export abstract class LdapDetailsComponent implements OnInit{
     passwordGroup: this.fb.group({
       password : [''],
       confirmPassword:['']
-    }),
+    }, { validators:  passwordsMatchingValidator}),
     mail:{value:'', disabled: true},
   })
-   constructor(
+
+  getErrorMessage(): string{
+    if(this.passwordForm?.errors){
+      return 'Les mots de passes ne correspondent pas';
+    }
+    return 'Entrez un mot passe';
+  }
+  get passwordForm(){ return this.userForm.get('passwordGroup')}
+
+  protected constructor(
+
     public addForm : boolean,
-    public route :ActivatedRoute,
     public fb: FormBuilder,
     public router : Router
 
   ) {
     this.passwordPlaceHolder = "Mot de passe" + (this.addForm ? '' : '(vide si inchangé)')
+     if(this.addForm){
+       this.passwordForm?.get('password')?.addValidators(Validators.required);
+       this.passwordForm?.get('confirmPassword')?.addValidators(Validators.required);
+     }
   }
 
   onInit():void{
 
   }
 
-  ngOnInit(): void {
-    // this.getUser();
-  }
+
+
+  // ngOnInit(): void {
+  //   // this.getUser();
+  // }
 
   // private getUser(){
   //   const login = this.route.snapshot.paramMap.get('id');
@@ -95,6 +114,15 @@ export abstract class LdapDetailsComponent implements OnInit{
     control?.setValue(this.formGetValue('login').toLowerCase() + '@epsi.lan');
   }
   isFormValid(){
+    // this.fb.group({
+    //   password: [''],
+    //   conformPasswod : ['']
+    // }, {
+    //   validators: passwordsMatchingValidator
+    // }),
+    //   {
+    //   mail: {value : '', disable: true}
+    // }
   return this.userForm.valid
     && (!this.addForm || this.formGetValue('passwordGroup.password') != '');
   }
@@ -142,8 +170,9 @@ export abstract class LdapDetailsComponent implements OnInit{
       motDePasse : '',
       role : 'ROLE_USER',
       dateEmbauche: "2020-04-04",
-      nomComplet: this.formGetValue('nom') + " " + this.formGetValue('prenom'),
+      nomComplet: this.formGetValue('nom') + " " + this.formGetValue('prenom')
     }
+
   }
 
 
