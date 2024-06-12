@@ -9,6 +9,9 @@ import {AlertComponent} from "../share/alert/alert.component";
 import {LdapListComponent} from "./ldap-list/ldap-list.component";
 import {LdpaAddComponent} from "./ldpa-add/ldpa-add.component";
 import {LdpaEditComponent} from "./ldpa-edit/ldpa-edit.component";
+import {HttpClientModule} from "@angular/common/http";
+import {HttpClientInMemoryWebApiModule} from "angular-in-memory-web-api";
+import {InMemoryUsersService} from "../in-memory-users.service";
 
 
 @NgModule({
@@ -24,7 +27,11 @@ import {LdpaEditComponent} from "./ldpa-edit/ldpa-edit.component";
     FormsModule,
     ReactiveFormsModule,
     AppMaterialModule,
-    LdapManagementRoutingModule
+    LdapManagementRoutingModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryUsersService, {dataEncapsulation: false}
+    )
 
   ]
 })

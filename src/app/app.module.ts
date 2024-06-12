@@ -19,6 +19,9 @@ import { LdpaAddComponent } from './ldap-management/ldpa-add/ldpa-add.component'
 import { AlertComponent } from './share/alert/alert.component';
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from "@angular/material/snack-bar";
 import { LdapManagementModule } from './ldap-management/ldap-management.module';
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HttpClientInMemoryWebApiModule} from "angular-in-memory-web-api";
+import {InMemoryUsersService} from "./in-memory-users.service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +35,11 @@ import { LdapManagementModule } from './ldap-management/ldap-management.module';
     AppMaterialModule,
     LdapManagementModule,
     AppRoutingModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryUsersService
+    )
   ],
   providers: [ {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue : {duration : 2500,
       verticalPosition: 'top'}}],
