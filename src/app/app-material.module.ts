@@ -16,6 +16,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatProgressSpinner, MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatSelect, MatSelectModule} from "@angular/material/select";
+import {MatCardModule} from "@angular/material/card";
 
 
 
@@ -36,7 +37,8 @@ import {MatSelect, MatSelectModule} from "@angular/material/select";
     MatInputModule,
     MatTooltipModule,
     MatProgressSpinnerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule
   ],
   imports: [
     CommonModule

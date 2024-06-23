@@ -5,9 +5,12 @@ import {LdapListComponent} from "./ldap-management/ldap-list/ldap-list.component
 import {LdapDetailsComponent} from "./ldap-management/ldap-details/ldap-details.component";
 import {LdpaEditComponent} from "./ldap-management/ldpa-edit/ldpa-edit.component";
 import {LdpaAddComponent} from "./ldap-management/ldpa-add/ldpa-add.component";
+import {LoginComponent} from "./security/login/login.component";
 
 const routes: Routes = [
 
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: 'users/list', pathMatch: 'full' },
 
   { path: '**', component: PageNotFoundComponent }
 ];

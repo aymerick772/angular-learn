@@ -12,6 +12,7 @@ import {LdpaEditComponent} from "./ldpa-edit/ldpa-edit.component";
 import {HttpClientModule} from "@angular/common/http";
 import {HttpClientInMemoryWebApiModule} from "angular-in-memory-web-api";
 import {InMemoryUsersService} from "../in-memory-users.service";
+import {NavbarComponent} from "../navbar/navbar.component";
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import {InMemoryUsersService} from "../in-memory-users.service";
     LdpaAddComponent,
     LdpaEditComponent,
     AlertComponent,
+    NavbarComponent
   ],
   imports: [
     CommonModule,
