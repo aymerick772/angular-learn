@@ -12,6 +12,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'users/list', pathMatch: 'full' },
 
+  { path: 'add', component: LdpaAddComponent },
+
   { path: '**', component: PageNotFoundComponent }
 ];
 
