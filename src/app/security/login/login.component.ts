@@ -35,7 +35,7 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    // if (this.form.valid) {
+    if (this.form.valid) {
       this.processRunning = true;
       this.authenticationService.loginWithRole(
         this.getFieldValue('userName'),
@@ -55,5 +55,5 @@ export class LoginComponent {
         }
       )
     }
-  // }
+  }
 }
